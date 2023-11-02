@@ -27,8 +27,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<LoginValidationBloc>();
-
     return BlocListener<LoginValidationBloc, LoginValidationState>(
       listener: (c, state) {
         if (state is InvalidState) {
