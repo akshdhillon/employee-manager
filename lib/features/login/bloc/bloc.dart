@@ -29,11 +29,7 @@ class LoginValidationBloc extends Bloc<LoginEvent, LoginValidationState> {
     PasswordChangedEvent event,
     Emitter<LoginValidationState> emit,
   ) {
-    final passwordRegex = RegExp(
-      r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-    );
-
-    isValidPassword = passwordRegex.hasMatch(event.text);
+    isValidPassword = event.text.length >= 6;
   }
 
   FutureOr<void> onLoginPressed(
@@ -41,11 +37,11 @@ class LoginValidationBloc extends Bloc<LoginEvent, LoginValidationState> {
     Emitter<LoginValidationState> emit,
   ) {
     if (!isValidEmail) {
-      emit(const InvalidState('please enter a valid email'));
+      emit(InvalidState('please enter a valid email'));
     } else if (!isValidPassword) {
-      emit(const InvalidState('please should be greater than 6 letters'));
+      emit(InvalidState('please should be greater than 6 letters'));
     } else {
-      emit(const ValidatedState());
+      emit(ValidatedState());
     }
   }
 }

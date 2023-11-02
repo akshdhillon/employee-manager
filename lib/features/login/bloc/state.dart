@@ -7,11 +7,11 @@ abstract class LoginValidationState {
 class InitialState extends LoginValidationState {}
 
 class ValidatedState extends LoginValidationState {
-  const ValidatedState();
+  ValidatedState();
 }
 
 class InvalidState extends LoginValidationState {
   final String message;
 
-  const InvalidState(this.message);
+  InvalidState(this.message);
 }
