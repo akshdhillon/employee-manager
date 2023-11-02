@@ -3,7 +3,9 @@ import 'package:employee_manager/utilities/enums/employees_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'widgets/age_group_dropdown.dart';
 import 'widgets/employee_list.dart';
+import 'widgets/employee_search_field.dart';
 
 class DashboardPage extends StatelessWidget {
   static const route = '/dashboard';
@@ -25,7 +27,12 @@ class DashboardPage extends StatelessWidget {
         const SizedBox(width: 20.0),
         BlocConsumer<EmployeeListingBloc, EmployeeListingState>(
           listener: (c, state) {},
-          builder: (c, state) => AgeGroupDropdown(state),
+          builder: (c, state) => AgeGroupDropdown(
+            state,
+            onChanged: (ageGroup) => context.read<EmployeeListingBloc>().add(
+                  FilterByAgeEvent(ageGroup ?? AgeGroup.all),
+                ),
+          ),
         ),
       ],
     );
@@ -54,58 +61,6 @@ class DashboardPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class EmployeeSearchField extends StatelessWidget {
-  final void Function(String text)? onChanged;
-  final String? hintText;
-
-  const EmployeeSearchField({
-    super.key,
-    this.onChanged,
-    this.hintText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 16.0,
-        ),
-        hintText: hintText,
-        border: const OutlineInputBorder(),
-      ),
-    );
-  }
-}
-
-class AgeGroupDropdown extends StatelessWidget {
-  final EmployeeListingState state;
-
-  const AgeGroupDropdown(
-    this.state, {
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<AgeGroup>(
-      value: state.ageGroup,
-      underline: const Offstage(),
-      items: AgeGroup.values.map((AgeGroup ageGroup) {
-        return DropdownMenuItem<AgeGroup>(
-          value: ageGroup,
-          child: Text(ageGroup.value),
-        );
-      }).toList(),
-      onChanged: (ageGroup) => context.read<EmployeeListingBloc>().add(
-            FilterByAgeEvent(ageGroup ?? AgeGroup.all),
-          ),
     );
   }
 }

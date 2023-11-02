@@ -1,6 +1,5 @@
+import 'package:employee_manager/data/models/employee_model.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../data/models/employee_model.dart';
 
 class EmployeeList extends StatelessWidget {
   final List<Employee> details;
