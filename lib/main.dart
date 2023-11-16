@@ -1,4 +1,6 @@
 import 'package:employee_manager/features/login/bloc/bloc.dart';
+import 'package:employee_manager/features/settings/bloc/bloc.dart';
+import 'package:employee_manager/features/settings/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +17,9 @@ void main() {
         ),
         BlocProvider(
           create: (c) => EmployeeListingBloc()..add(FetchEmployeesEvent()),
+        ),
+        BlocProvider(
+          create: (c) => SettingsBloc(),
         ),
       ],
       child: const MyApp(),
@@ -35,10 +40,11 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
         ),
       ),
-      initialRoute: LoginPage.route,
+      initialRoute: SettingsPage.route,
       routes: {
-        LoginPage.route: (context) => const LoginPage(),
-        DashboardPage.route: (context) => const DashboardPage(),
+        LoginPage.route: (_) => const LoginPage(),
+        DashboardPage.route: (_) => const DashboardPage(),
+        SettingsPage.route: (_) => const SettingsPage(),
       },
     );
   }
